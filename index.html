@@ -11,8 +11,33 @@
 </head>
 
 <body>
-    <input id="cityInput" type="text" placeholder="Search for a city">
-    <button id="searchBtn" class="btn btn-primary">Search</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <img src="./assets/sun-fill.png" class="imgResize ms-4" alt="sun logo">
+            </div>
+            <div class="col d-flex justify-content-center">
+                <h1 class="text-center">FORECAST</h1>
+            </div>
+            <div class="col d-flex justify-content-end">
+                <div></div> <!-- This will need to store the icons and use JS to make it normal or gold -->
+                <img src="./assets/star.png" class="imgResize me-4" alt="favorites button">
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <hr>
+    </div>
+    
+
+    <!-- Current Weather -->
+
+    <div class="d-flex justify-content-center">
+        <input id="cityInput" type="text" placeholder="Search for a city">
+        <button id="searchBtn" class="btn btn-secondary">Go</button>
+    </div>
+
     <div id="currentWeather"></div>
     <div id="currentWeatherMain"></div>
     <div id="currentWeatherConditions"></div>
@@ -25,8 +50,9 @@
     <!-- 
         STILL NEED:
         Max/Min temp
-     -->
+    -->
 
+    <!-- 5 Day Forecast -->
 
 
 
