@@ -1,6 +1,11 @@
 Jerrod Packard
 Weather Sprint
 
+December 5 - End of day:
+    - Got all current weather fetches working
+    - Started working on 5 day forecast fetches
+    - Scaffolded a bit of HTML
+
 December 4 - End of day:
     - Created repo
     - Worked on getting geolocation and API calls to return data in console.

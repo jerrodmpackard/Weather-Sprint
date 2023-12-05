@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid mt-1">
         <div class="row">
             <div class="col">
                 <img src="./assets/sun-fill.png" class="imgResize ms-4" alt="sun logo">
@@ -35,7 +35,7 @@
 
     <div class="d-flex justify-content-center">
         <input id="cityInput" type="text" placeholder="Search for a city">
-        <button id="searchBtn" class="btn btn-secondary">Go</button>
+        <button id="searchBtn" class="btn btn-secondary ms-1">Go</button>
     </div>
 
     <div id="currentWeather"></div>
@@ -46,6 +46,8 @@
     <div id="visibility"></div>
     <div id="windSpeed"></div>
     <div id="locationCode"></div>
+    <div id="currentWeatherMax"></div>
+    <div id="currentWeatherMin"></div>
 
     <!-- 
         STILL NEED:
@@ -53,7 +55,45 @@
     -->
 
     <!-- 5 Day Forecast -->
-
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div id="day1Date"></div>
+            <div id="day1Max"></div>
+            <div id="day1Min"></div>
+            <div id="day1Icon"></div>
+            <div id="day1Conditions"></div>
+        </div>
+        <div class="col">
+            <div id="day2Date"></div>
+            <div id="day2Max"></div>
+            <div id="day2Min"></div>
+            <div id="day2Icon"></div>
+            <div id="day2Conditions"></div>
+        </div>
+        <div class="col">
+            <div id="day3Date"></div>
+            <div id="day3Max"></div>
+            <div id="day3Min"></div>
+            <div id="day3Icon"></div>
+            <div id="day3Conditions"></div>
+        </div>
+        <div class="col">
+            <div id="day4Date"></div>
+            <div id="day4Max"></div>
+            <div id="day4Min"></div>
+            <div id="day4Icon"></div>
+            <div id="day4Conditions"></div>
+        </div>
+        <div class="col">
+            <div id="day5Date"></div>
+            <div id="day5Max"></div>
+            <div id="day5Min"></div>
+            <div id="day5Icon"></div>
+            <div id="day5Conditions"></div>
+        </div>
+    </div>
+</div>
 
 
 

@@ -1,5 +1,6 @@
 import { apiKey } from "./environment.js";
 
+// Current Weather DOM
 let cityInput = document.getElementById("cityInput");
 let searchBtn = document.getElementById("searchBtn");
 let currentWeather = document.getElementById("currentWeather");
@@ -10,11 +11,44 @@ let humidity = document.getElementById("humidity");
 let visibility = document.getElementById("visibility");
 let windSpeed = document.getElementById("windSpeed");
 let locationCode = document.getElementById("locationCode");
+let currentWeatherMax = document.getElementById("currentWeatherMax");
+let currentWeatherMin = document.getElementById("currentWeatherMin");
 
 let lat;
 let lon;
 
-// geolocation
+// 5 Day Forecast DOM
+let day1Date = document.getElementById("day1Date");
+let day1Max = document.getElementById("day1Max");
+let day1Min = document.getElementById("day1Min");
+let day1Icon = document.getElementById("day1Icon");
+let day1Conditions = document.getElementById("day1Conditions");
+
+let day2Date = document.getElementById("day2Date");
+let day2Max = document.getElementById("day2Max");
+let day2Min = document.getElementById("day2Min");
+let day2Icon = document.getElementById("day2Icon");
+let day2Conditions = document.getElementById("day2Conditions");
+
+let day3Date = document.getElementById("day3Date");
+let day3Max = document.getElementById("day3Max");
+let day3Min = document.getElementById("day3Min");
+let day3Icon = document.getElementById("day3Icon");
+let day3Conditions = document.getElementById("day3Conditions");
+
+let day4Date = document.getElementById("day4Date");
+let day4Max = document.getElementById("day4Max");
+let day4Min = document.getElementById("day4Min");
+let day4Icon = document.getElementById("day4Icon");
+let day4Conditions = document.getElementById("day4Conditions");
+
+let day5Date = document.getElementById("day5Date");
+let day5Max = document.getElementById("day5Max");
+let day5Min = document.getElementById("day5Min");
+let day5Icon = document.getElementById("day5Icon");
+let day5Conditions = document.getElementById("day5Conditions");
+
+// Geolocation code
 navigator.geolocation.getCurrentPosition(success, errorFunc);
 
 function success(position){
@@ -102,4 +136,4 @@ searchBtn.addEventListener("click", function() {
     currentWeatherCall();
 });
 
-// currentWeatherCall();
+// Geolocation -> 5 Day Forecast API Call
