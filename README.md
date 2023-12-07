@@ -1,6 +1,11 @@
 Jerrod Packard
 Weather Sprint
 
+December 6 - End of day;
+    - Got all 5 day forecast fetches working
+    - Added off canvas favorites menu
+    - Worked on JS to change favorites icon on click
+
 December 5 - End of day:
     - Got all current weather fetches working
     - Started working on 5 day forecast fetches

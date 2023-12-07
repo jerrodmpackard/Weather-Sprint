@@ -11,95 +11,127 @@
 </head>
 
 <body>
-    <div class="container-fluid mt-1">
+    <!-- Header -->
+    <div class="container-fluid mt-3">
         <div class="row">
             <div class="col">
-                <img src="./assets/sun-fill.png" class="imgResize ms-4" alt="sun logo">
+                <!-- Off canvas favorites bar -->
+                <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                    <img src="./assets/sun-fill.png" class="imgResize ms-4" alt="sun logo">
+                </a>
+
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                    aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title fontSize40" id="offcanvasExampleLabel">Favorite Locations</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div>
+                            <hr>
+                            Some text as placeholder. In real life you can have the elements you have chosen. Like,
+                            text, images,
+                            lists, etc.
+                        </div>
+                    </div>
+                </div>
+                <!-- End of off canvas favorites bar -->
             </div>
             <div class="col d-flex justify-content-center">
                 <h1 class="text-center">FORECAST</h1>
             </div>
             <div class="col d-flex justify-content-end">
                 <div></div> <!-- This will need to store the icons and use JS to make it normal or gold -->
-                <img src="./assets/star.png" class="imgResize me-4" alt="favorites button">
+                <img id="starBtn" src="./assets/star.png" class="imgResize me-4" alt="favorites button">
             </div>
         </div>
     </div>
-    
+    <!-- End of Header -->
+
+    <!-- Line Break -->
     <div class="container">
         <hr>
     </div>
-    
+    <!-- End of Line Break -->
 
     <!-- Current Weather -->
-
     <div class="d-flex justify-content-center">
         <input id="cityInput" type="text" placeholder="Search for a city">
         <button id="searchBtn" class="btn btn-secondary ms-1">Go</button>
     </div>
 
-    <div id="currentWeather"></div>
-    <div id="currentWeatherMain"></div>
-    <div id="currentWeatherConditions"></div>
-    <div id="feelsLike"></div>
-    <div id="humidity"></div>
-    <div id="visibility"></div>
-    <div id="windSpeed"></div>
-    <div id="locationCode"></div>
-    <div id="currentWeatherMax"></div>
-    <div id="currentWeatherMin"></div>
-
-    <!-- 
-        STILL NEED:
-        Max/Min temp
-    -->
-
-    <!-- 5 Day Forecast -->
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div id="day1Date"></div>
-            <div id="day1Max"></div>
-            <div id="day1Min"></div>
-            <div id="day1Icon"></div>
-            <div id="day1Conditions"></div>
-        </div>
-        <div class="col">
-            <div id="day2Date"></div>
-            <div id="day2Max"></div>
-            <div id="day2Min"></div>
-            <div id="day2Icon"></div>
-            <div id="day2Conditions"></div>
-        </div>
-        <div class="col">
-            <div id="day3Date"></div>
-            <div id="day3Max"></div>
-            <div id="day3Min"></div>
-            <div id="day3Icon"></div>
-            <div id="day3Conditions"></div>
-        </div>
-        <div class="col">
-            <div id="day4Date"></div>
-            <div id="day4Max"></div>
-            <div id="day4Min"></div>
-            <div id="day4Icon"></div>
-            <div id="day4Conditions"></div>
-        </div>
-        <div class="col">
-            <div id="day5Date"></div>
-            <div id="day5Max"></div>
-            <div id="day5Min"></div>
-            <div id="day5Icon"></div>
-            <div id="day5Conditions"></div>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col">
+                <div id="currentWeatherMaxMin"></div>
+                <div id="currentWeather"></div>
+                <div id="feelsLike"></div>
+            </div>
+            <div class="col">
+                <div id="humidity"></div>
+                <div id="visibility"></div>
+                <div id="windSpeed"></div>
+            </div>
+            <div class="col">
+                <div id="currentWeatherMain"></div>
+                <div id="currentWeatherConditions"></div>
+                <div id="locationCode"></div>
+            </div>
         </div>
     </div>
-</div>
+    <!-- End of Current Weather -->
 
-
-
-
-
-
+    <!-- 5 Day Forecast -->
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex flex-column text-center cardBackground me-1">
+                <p id="day1Date" class="fontSize30"></p>
+                <!-- <hr> -->
+                <div id="day1Max"></div>
+                <div id="day1Min"></div>
+                <div>
+                    <img id="day1Icon" src="" alt="weather icon">
+                </div>
+                <div id="day1Conditions"></div>
+            </div>
+            <div class="col d-flex flex-column text-center cardBackground me-1">
+                <div id="day2Date"></div>
+                <div id="day2Max"></div>
+                <div id="day2Min"></div>
+                <div>
+                    <img id="day2Icon" src="" alt="weather icon">
+                </div>
+                <div id="day2Conditions"></div>
+            </div>
+            <div class="col d-flex flex-column text-center cardBackground me-1">
+                <div id="day3Date"></div>
+                <div id="day3Max"></div>
+                <div id="day3Min"></div>
+                <div>
+                    <img id="day3Icon" src="" alt="weather icon">
+                </div>
+                <div id="day3Conditions"></div>
+            </div>
+            <div class="col d-flex flex-column text-center cardBackground me-1">
+                <div id="day4Date"></div>
+                <div id="day4Max"></div>
+                <div id="day4Min"></div>
+                <div>
+                    <img id="day4Icon" src="" alt="weather icon">
+                </div>
+                <div id="day4Conditions"></div>
+            </div>
+            <div class="col d-flex flex-column text-center cardBackground">
+                <div id="day5Date"></div>
+                <div id="day5Max"></div>
+                <div id="day5Min"></div>
+                <div>
+                    <img id="day5Icon" src="" alt="weather icon">
+                </div>
+                <div id="day5Conditions"></div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
