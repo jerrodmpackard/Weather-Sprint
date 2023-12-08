@@ -12,7 +12,7 @@
 
 <body>
     <!-- Header -->
-    <div class="container-fluid mt-3">
+    <div class="container-fluid m-3">
         <div class="row">
             <div class="col">
                 <!-- Off canvas favorites bar -->
@@ -29,14 +29,13 @@
                     <div class="offcanvas-body">
                         <div>
                             <hr>
-                            Some text as placeholder. In real life you can have the elements you have chosen. Like,
-                            text, images,
-                            lists, etc.
+                            Add favorites here
                         </div>
                     </div>
                 </div>
                 <!-- End of off canvas favorites bar -->
             </div>
+
             <div class="col d-flex justify-content-center">
                 <h1 class="text-center">FORECAST</h1>
             </div>
@@ -54,81 +53,102 @@
     </div>
     <!-- End of Line Break -->
 
-    <!-- Current Weather -->
-    <div class="d-flex justify-content-center">
-        <input id="cityInput" type="text" placeholder="Search for a city">
-        <button id="searchBtn" class="btn btn-secondary ms-1">Go</button>
+    <!-- Search Bar -->
+    <div class="d-flex justify-content-center mt-4">
+        <input id="cityInput" class="inputSize" type="text">
+        <button id="searchBtn" class="btn btn-secondary fontSize30 buttonSize ms-2">Go</button>
     </div>
 
+    <!-- Current Weather -->
     <div class="container my-5">
         <div class="row">
-            <div class="col">
-                <div id="currentWeatherMaxMin"></div>
-                <div id="currentWeather"></div>
-                <div id="feelsLike"></div>
+            <div class="col text-center">
+                <div id="currentWeatherMaxMin" class="fontSize40"></div>
             </div>
             <div class="col">
-                <div id="humidity"></div>
-                <div id="visibility"></div>
-                <div id="windSpeed"></div>
+                <div id="humidity" class="fontSize32"></div>
             </div>
             <div class="col">
-                <div id="currentWeatherMain"></div>
-                <div id="currentWeatherConditions"></div>
-                <div id="locationCode"></div>
+                <div id="currentWeatherMain" class="fontSize32"></div>
             </div>
         </div>
+        <div class="circle">
+            
+        </div>
+        <div class="row my-3">
+            <div class="col text-center">
+                <div id="currentWeather" class="fontSize72"></div>
+            </div>
+            <div class="col text-center d-flex align-self-center">
+                <div id="visibility" class="fontSize32"></div>
+            </div>
+            <div class="col text-center d-flex align-self-center">
+                <div id="currentWeatherConditions" class="fontSize32"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <div id="feelsLike" class="fontSize32"></div>
+            </div>
+            <div class="col">
+                <div id="windSpeed" class="fontSize32"></div>
+            </div>
+            <div class="col">
+                <div id="locationCode" class="fontSize32"></div>
+            </div>
+        </div>
+    </div>
     </div>
     <!-- End of Current Weather -->
 
     <!-- 5 Day Forecast -->
     <div class="container">
         <div class="row">
-            <div class="col d-flex flex-column text-center cardBackground me-1">
-                <p id="day1Date" class="fontSize30"></p>
+            <div class="col d-flex flex-column text-center cardBackground me-1 py-4">
+                <div id="day1Date" class="fontSize30"></div>
                 <!-- <hr> -->
-                <div id="day1Max"></div>
-                <div id="day1Min"></div>
+                <div id="day1Max" class="fontSize24"></div>
+                <div id="day1Min" class="fontSize24"></div>
                 <div>
                     <img id="day1Icon" src="" alt="weather icon">
                 </div>
-                <div id="day1Conditions"></div>
+                <div id="day1Conditions" class="fontSize24"></div>
             </div>
-            <div class="col d-flex flex-column text-center cardBackground me-1">
-                <div id="day2Date"></div>
-                <div id="day2Max"></div>
-                <div id="day2Min"></div>
+            <div class="col d-flex flex-column text-center cardBackground me-1 py-4">
+                <div id="day2Date" class="fontSize30"></div>
+                <div id="day2Max" class="fontSize24"></div>
+                <div id="day2Min" class="fontSize24"></div>
                 <div>
                     <img id="day2Icon" src="" alt="weather icon">
                 </div>
-                <div id="day2Conditions"></div>
+                <div id="day2Conditions" class="fontSize24"></div>
             </div>
-            <div class="col d-flex flex-column text-center cardBackground me-1">
-                <div id="day3Date"></div>
-                <div id="day3Max"></div>
-                <div id="day3Min"></div>
+            <div class="col d-flex flex-column text-center cardBackground me-1 py-4">
+                <div id="day3Date" class="fontSize30"></div>
+                <div id="day3Max" class="fontSize24"></div>
+                <div id="day3Min" class="fontSize24"></div>
                 <div>
                     <img id="day3Icon" src="" alt="weather icon">
                 </div>
-                <div id="day3Conditions"></div>
+                <div id="day3Conditions" class="fontSize24"></div>
             </div>
-            <div class="col d-flex flex-column text-center cardBackground me-1">
-                <div id="day4Date"></div>
-                <div id="day4Max"></div>
-                <div id="day4Min"></div>
+            <div class="col d-flex flex-column text-center cardBackground me-1 py-4">
+                <div id="day4Date" class="fontSize30"></div>
+                <div id="day4Max" class="fontSize24"></div>
+                <div id="day4Min" class="fontSize24"></div>
                 <div>
                     <img id="day4Icon" src="" alt="weather icon">
                 </div>
-                <div id="day4Conditions"></div>
+                <div id="day4Conditions" class="fontSize24"></div>
             </div>
-            <div class="col d-flex flex-column text-center cardBackground">
-                <div id="day5Date"></div>
-                <div id="day5Max"></div>
-                <div id="day5Min"></div>
+            <div class="col d-flex flex-column text-center cardBackground py-4">
+                <div id="day5Date" class="fontSize30"></div>
+                <div id="day5Max" class="fontSize24"></div>
+                <div id="day5Min" class="fontSize24"></div>
                 <div>
                     <img id="day5Icon" src="" alt="weather icon">
                 </div>
-                <div id="day5Conditions"></div>
+                <div id="day5Conditions" class="fontSize24"></div>
             </div>
         </div>
     </div>

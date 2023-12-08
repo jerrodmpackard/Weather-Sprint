@@ -1,4 +1,5 @@
 import { apiKey } from "./environment.js";
+import { saveToLocalStorage, getLocalStorage, removeFromLocalStorage } from "./localStorage.js";
 
 // Current Weather DOM
 let cityInput = document.getElementById("cityInput");
@@ -13,12 +14,17 @@ let windSpeed = document.getElementById("windSpeed");
 let locationCode = document.getElementById("locationCode");
 let currentWeatherMaxMin = document.getElementById("currentWeatherMaxMin");
 let starBtn = document.getElementById("starBtn");
+// let favoritesBtn = document.getElementById("favoritesBtn");
 
 // Declaring necessary variables
 let lat;
 let lon;
 let cityName;
-// End of Declaring necessary variables
+let dayNames = [];
+// let favoritesList = [];
+let inFavorites;
+let city = locationCode.innerText;
+// End of variable declarations
 
 // 5 Day Forecast DOM
 let day1Date = document.getElementById("day1Date");
@@ -61,7 +67,7 @@ function success(position){
     lat = position.coords.latitude;
     lon = position.coords.longitude;
 
-    currentWeather.innerText = "Locating..."
+    humidity.innerText = "Locating..."
 
     currentGeoWeatherCall();
     fiveDayGeoWeatherCall();
@@ -74,37 +80,27 @@ function errorFunc(error){
 
 // Geolocation function -> Current weather API call
 async function currentGeoWeatherCall() {
-
     const promise = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`);
 
     const data = await promise.json();
 
-    console.log(`Current weather: ${Math.round(data.main.temp)}° F`);
-    currentWeather.innerText = `Current weather: ${Math.round(data.main.temp)}° F`;
+    currentWeather.innerText = `${Math.round(data.main.temp)}° F`;
 
-    console.log(`Currently: ${data.weather[0].main}`);
-    currentWeatherMain.innerText = `Currently: ${data.weather[0].main}`;
+    currentWeatherMain.innerText = `${data.weather[0].main}`;
 
-    console.log(`Currently: ${data.weather[0].description}`);
-    currentWeatherConditions.innerText = `Currently: ${data.weather[0].description}`;
+    currentWeatherConditions.innerText = `${data.weather[0].description}`;
 
-    console.log(`Feels like: ${Math.round(data.main.feels_like)}° F`);
-    feelsLike.innerText = `Feels like: ${Math.round(data.main.feels_like)}° F`;
+    feelsLike.innerText = `Like: ${Math.round(data.main.feels_like)}°`;
 
-    console.log(`Humidity: ${Math.round(data.main.humidity)}%`);
     humidity.innerText = `Humidity: ${Math.round(data.main.humidity)}%`;
 
-    console.log(`Visibility: ${Math.round(data.visibility)}m`);
     visibility.innerText = `Visibility: ${Math.round(data.visibility)}m`;
 
-    console.log(`Wind Speed: ${Math.round(data.wind.speed)} mph`);
     windSpeed.innerText = `Wind Speed: ${Math.round(data.wind.speed)} mph`;
 
-    console.log(`Location: ${data.name}, ${data.sys.country}`);
-    locationCode.innerText = `Location: ${data.name}, ${data.sys.country}`;
+    locationCode.innerText = `${data.name}, ${data.sys.country}`;
 
-    console.log(`Max/Min: ${Math.round(data.main.temp_max)}°/${Math.round(data.main.temp_min)}°`);
-    currentWeatherMaxMin.innerText = `Max/Min: ${Math.round(data.main.temp_max)}°/${Math.round(data.main.temp_min)}°`;
+    currentWeatherMaxMin.innerText = `${Math.round(data.main.temp_max)}°/${Math.round(data.main.temp_min)}°`;
 }
 
 // Search function -> Current weather API call
@@ -115,73 +111,80 @@ async function currentWeatherCall() {
 
     const data = await promise.json();
 
-    console.log(`Current weather: ${Math.round(data.main.temp)}° F`);
-    currentWeather.innerText = `Current weather: ${Math.round(data.main.temp)}° F`;
+    currentWeather.innerText = `${Math.round(data.main.temp)}° F`;
 
-    console.log(`Currently: ${data.weather[0].main}`);
-    currentWeatherMain.innerText = `Currently: ${data.weather[0].main}`;
+    currentWeatherMain.innerText = `${data.weather[0].main}`;
 
-    console.log(`Currently: ${data.weather[0].description}`);
-    currentWeatherConditions.innerText = `Currently: ${data.weather[0].description}`;
+    currentWeatherConditions.innerText = `${data.weather[0].description}`;
 
-    console.log(`Feels like: ${Math.round(data.main.feels_like)}° F`);
-    feelsLike.innerText = `Feels like: ${Math.round(data.main.feels_like)}° F`;
+    feelsLike.innerText = `Like: ${Math.round(data.main.feels_like)}°`;
 
-    console.log(`Humidity: ${Math.round(data.main.humidity)}%`);
     humidity.innerText = `Humidity: ${Math.round(data.main.humidity)}%`;
 
-    console.log(`Visibility: ${Math.round(data.visibility)}m`);
     visibility.innerText = `Visibility: ${Math.round(data.visibility)}m`;
 
-    console.log(`Wind Speed: ${Math.round(data.wind.speed)} mph`);
     windSpeed.innerText = `Wind Speed: ${Math.round(data.wind.speed)} mph`;
 
-    console.log(`Location: ${data.name}, ${data.sys.country}`);
-    locationCode.innerText = `Location: ${data.name}, ${data.sys.country}`;
+    locationCode.innerText = `${data.name}, ${data.sys.country}`;
 
-    console.log(`Max/Min: ${Math.round(data.main.temp_max)}°/${Math.round(data.main.temp_min)}°`);
-    currentWeatherMaxMin.innerText = `Max/Min: ${Math.round(data.main.temp_max)}°/${Math.round(data.main.temp_min)}°`;
+    currentWeatherMaxMin.innerText = `${Math.round(data.main.temp_max)}°/${Math.round(data.main.temp_min)}°`;
 }   
 
 searchBtn.addEventListener("click", function() {
     currentWeatherCall();
     fiveDayWeatherCall();
+    // cityInput.value = "";
+    console.log(inFavorites);
 });
 
 // Geolocation -> 5 Day Forecast API Call
 async function fiveDayGeoWeatherCall() {
+    dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`);
 
     const data = await promise.json();
 
-    console.log(data.list[0].main.temp);
+    let day1 = new Date(data.list[0].dt_txt);
+    let day1Day = day1.getDay();
 
-    day1Date.innerText = data.list[0].dt_txt;
+    day1Date.innerText = dayNames[day1Day];
     day1Max.innerText = `${Math.round(data.list[0].main.temp_max)}°`;
     day1Min.innerText = `${Math.round(data.list[0].main.temp_min)}°`;
     day1Icon.src = `https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`
     day1Conditions.innerText = data.list[0].weather[0].description;
 
-    day2Date.innerText = data.list[8].dt_txt;
+    let day2 = new Date(data.list[8].dt_txt);
+    let day2Day = day2.getDay();
+
+    day2Date.innerText = dayNames[day2Day];
     day2Max.innerText = `${Math.round(data.list[8].main.temp_max)}°`;
     day2Min.innerText = `${Math.round(data.list[8].main.temp_min)}°`;
     day2Icon.src = `https://openweathermap.org/img/wn/${data.list[8].weather[0].icon}@2x.png`
     day2Conditions.innerText = data.list[8].weather[0].description;
 
-    day3Date.innerText = data.list[16].dt_txt;
+    let day3 = new Date(data.list[16].dt_txt);
+    let day3Day = day3.getDay();
+
+    day3Date.innerText = dayNames[day3Day];
     day3Max.innerText = `${Math.round(data.list[16].main.temp_max)}°`;
     day3Min.innerText = `${Math.round(data.list[16].main.temp_min)}°`;
     day3Icon.src = `https://openweathermap.org/img/wn/${data.list[16].weather[0].icon}@2x.png`
     day3Conditions.innerText = data.list[16].weather[0].description;
 
-    day4Date.innerText = data.list[24].dt_txt;
+    let day4 = new Date(data.list[24].dt_txt);
+    let day4Day = day4.getDay();
+
+    day4Date.innerText = dayNames[day4Day];
     day4Max.innerText = `${Math.round(data.list[24].main.temp_max)}°`;
     day4Min.innerText = `${Math.round(data.list[24].main.temp_min)}°`;
     day4Icon.src = `https://openweathermap.org/img/wn/${data.list[24].weather[0].icon}@2x.png`
     day4Conditions.innerText = data.list[24].weather[0].description;
 
-    day5Date.innerText = data.list[32].dt_txt;
+    let day5 = new Date(data.list[32].dt_txt);
+    let day5Day = day5.getDay();
+
+    day5Date.innerText = dayNames[day5Day];
     day5Max.innerText = `${Math.round(data.list[32].main.temp_max)}°`;
     day5Min.innerText = `${Math.round(data.list[32].main.temp_min)}°`;
     day5Icon.src = `https://openweathermap.org/img/wn/${data.list[32].weather[0].icon}@2x.png`
@@ -191,38 +194,52 @@ async function fiveDayGeoWeatherCall() {
 // Search function -> 5 Day Forecast API Call
 async function fiveDayWeatherCall() {
     cityName = cityInput.value.toLowerCase();
+    dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial`);
 
     const data = await promise.json();
 
-    console.log(data.list[0].main.temp);
+    let day1 = new Date(data.list[0].dt_txt);
+    let day1Day = day1.getDay();
 
-    day1Date.innerText = data.list[0].dt_txt;
+    day1Date.innerText = dayNames[day1Day];
     day1Max.innerText = `${Math.round(data.list[0].main.temp_max)}°`;
     day1Min.innerText = `${Math.round(data.list[0].main.temp_min)}°`;
     day1Icon.src = `https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`
     day1Conditions.innerText = data.list[0].weather[0].description;
 
-    day2Date.innerText = data.list[8].dt_txt;
+    let day2 = new Date(data.list[8].dt_txt);
+    let day2Day = day2.getDay();
+
+    day2Date.innerText = dayNames[day2Day];
     day2Max.innerText = `${Math.round(data.list[8].main.temp_max)}°`;
     day2Min.innerText = `${Math.round(data.list[8].main.temp_min)}°`;
     day2Icon.src = `https://openweathermap.org/img/wn/${data.list[8].weather[0].icon}@2x.png`
     day2Conditions.innerText = data.list[8].weather[0].description;
 
-    day3Date.innerText = data.list[16].dt_txt;
+    let day3 = new Date(data.list[16].dt_txt);
+    let day3Day = day3.getDay();
+
+    day3Date.innerText = dayNames[day3Day];
     day3Max.innerText = `${Math.round(data.list[16].main.temp_max)}°`;
     day3Min.innerText = `${Math.round(data.list[16].main.temp_min)}°`;
     day3Icon.src = `https://openweathermap.org/img/wn/${data.list[16].weather[0].icon}@2x.png`
     day3Conditions.innerText = data.list[16].weather[0].description;
 
-    day4Date.innerText = data.list[24].dt_txt;
+    let day4 = new Date(data.list[24].dt_txt);
+    let day4Day = day4.getDay();
+
+    day4Date.innerText = dayNames[day4Day];
     day4Max.innerText = `${Math.round(data.list[24].main.temp_max)}°`;
     day4Min.innerText = `${Math.round(data.list[24].main.temp_min)}°`;
     day4Icon.src = `https://openweathermap.org/img/wn/${data.list[24].weather[0].icon}@2x.png`
     day4Conditions.innerText = data.list[24].weather[0].description;
 
-    day5Date.innerText = data.list[32].dt_txt;
+    let day5 = new Date(data.list[32].dt_txt);
+    let day5Day = day5.getDay();
+
+    day5Date.innerText = dayNames[day5Day];
     day5Max.innerText = `${Math.round(data.list[32].main.temp_max)}°`;
     day5Min.innerText = `${Math.round(data.list[32].main.temp_min)}°`;
     day5Icon.src = `https://openweathermap.org/img/wn/${data.list[32].weather[0].icon}@2x.png`
@@ -237,6 +254,40 @@ starBtn.addEventListener("click", function() {
     //     starBtn.src = "../assets/star.png";
     // }
     
-    starBtn.src = "../assets/star-fill.png";
+    // starBtn.src = "../assets/star-fill.png";
+    
+    // favoritesList.push(locationCode.innerText);
+    // console.log(favoritesList);
 
+    getLocalStorage();
+    saveToLocalStorage(locationCode.innerText);
+
+    
+
+    // localStorage.setItem("favorites", JSON.stringify(favoritesList));
 });
+
+// favoritesBtn.addEventListener("click", function() {
+//     favoritesList.push(cityInput.value);
+//     console.log(favoritesList);
+
+//     localStorage.setItem("favorites", JSON.stringify(favoritesList));
+// })
+
+getLocalStorage();
+// if location is in array, inFavorites = true
+if(favoritesList.includes(city)){
+    inFavorites = true;
+}else{
+    inFavorites = false;
+}
+
+if(inFavorites){
+    starBtn.src = "../assets/star-fill.png";
+}
+
+if(!inFavorites){
+    starBtn.src = "../assets/star.png";
+}
+
+console.log(inFavorites);

@@ -11,8 +11,16 @@ h1{
     font-size: 72px;
 }
 
+.fontSize24{
+    font-size: 24px;
+}
+
 .fontSize30{
     font-size: 30px;
+}
+
+.fontSize32{
+    font-size: 32px;
 }
 
 .fontSize40{
@@ -20,7 +28,33 @@ h1{
     font-weight: bold;
 }
 
+.fontSize72{
+    font-size: 72px;
+}
+
 .cardBackground{
     background: rgb(251,251,251);
     background: linear-gradient(180deg, rgba(251,251,251,1) 0%, rgba(223,240,252,1) 35%, rgba(155,213,255,1) 100%);
 }
+
+.inputSize{
+    width: 485px;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.buttonSize{
+    width: 100px;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.circle { 
+    width: 350px; 
+    height: 350px; 
+    border: 15px solid #F1BC00; 
+    border-radius: 50%; 
+    position: absolute;
+    top: 230px;
+    margin-left: 30px;
+} 

@@ -1,7 +1,11 @@
 Jerrod Packard
 Weather Sprint
 
-December 6 - End of day;
+December 7 - End of day:
+    - Added days of the week to 5 day forecast
+    - Began working on adding favorites functionality with local storage
+
+December 6 - End of day:
     - Got all 5 day forecast fetches working
     - Added off canvas favorites menu
     - Worked on JS to change favorites icon on click
