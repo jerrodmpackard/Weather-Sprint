@@ -14,15 +14,14 @@ let windSpeed = document.getElementById("windSpeed");
 let locationCode = document.getElementById("locationCode");
 let currentWeatherMaxMin = document.getElementById("currentWeatherMaxMin");
 let starBtn = document.getElementById("starBtn");
-// let favoritesBtn = document.getElementById("favoritesBtn");
+let injectHere = document.getElementById("injectHere");
 
 // Declaring necessary variables
 let lat;
 let lon;
 let cityName;
 let dayNames = [];
-// let favoritesList = [];
-let inFavorites;
+let favoritesList = [];
 let city = locationCode.innerText;
 // End of variable declarations
 
@@ -61,9 +60,6 @@ let day5Conditions = document.getElementById("day5Conditions");
 navigator.geolocation.getCurrentPosition(success, errorFunc);
 
 function success(position){
-    console.log("Our latitude: " + position.coords.latitude);
-    console.log("Our longitude: " + position.coords.longitude);
-
     lat = position.coords.latitude;
     lon = position.coords.longitude;
 
@@ -104,8 +100,7 @@ async function currentGeoWeatherCall() {
 }
 
 // Search function -> Current weather API call
-async function currentWeatherCall() {
-    cityName = cityInput.value.toLowerCase();
+async function currentWeatherCall(cityName) {
 
     const promise = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=${apiKey}&units=imperial`);
 
@@ -128,13 +123,16 @@ async function currentWeatherCall() {
     locationCode.innerText = `${data.name}, ${data.sys.country}`;
 
     currentWeatherMaxMin.innerText = `${Math.round(data.main.temp_max)}°/${Math.round(data.main.temp_min)}°`;
+
+    loadChecks();
 }   
 
 searchBtn.addEventListener("click", function() {
-    currentWeatherCall();
-    fiveDayWeatherCall();
-    // cityInput.value = "";
-    console.log(inFavorites);
+    cityName = cityInput.value.toLowerCase();
+    currentWeatherCall(cityName);
+    fiveDayWeatherCall(cityName);
+    cityInput.value = "";
+    
 });
 
 // Geolocation -> 5 Day Forecast API Call
@@ -192,8 +190,7 @@ async function fiveDayGeoWeatherCall() {
 }
 
 // Search function -> 5 Day Forecast API Call
-async function fiveDayWeatherCall() {
-    cityName = cityInput.value.toLowerCase();
+async function fiveDayWeatherCall(cityName) {
     dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial`);
@@ -244,50 +241,58 @@ async function fiveDayWeatherCall() {
     day5Min.innerText = `${Math.round(data.list[32].main.temp_min)}°`;
     day5Icon.src = `https://openweathermap.org/img/wn/${data.list[32].weather[0].icon}@2x.png`
     day5Conditions.innerText = data.list[32].weather[0].description;
+
+    loadChecks();
 }
 
 starBtn.addEventListener("click", function() {
-    // if(starBtn.src == "../assets/star.png"){
-    //     starBtn.src = "../assets/star-fill.png";
-    // }
-    // else{
-    //     starBtn.src = "../assets/star.png";
-    // }
+    favoritesList = getLocalStorage();
     
-    // starBtn.src = "../assets/star-fill.png";
-    
-    // favoritesList.push(locationCode.innerText);
-    // console.log(favoritesList);
+    if(!favoritesList.includes(locationCode.innerText)){
+        saveToLocalStorage(locationCode.innerText);
+        createFavorite();
+    }else{
+        removeFromLocalStorage(locationCode.innerText);
+    }
 
-    getLocalStorage();
-    saveToLocalStorage(locationCode.innerText);
-
-    
-
-    // localStorage.setItem("favorites", JSON.stringify(favoritesList));
+    loadChecks();
 });
 
-// favoritesBtn.addEventListener("click", function() {
-//     favoritesList.push(cityInput.value);
-//     console.log(favoritesList);
+function createFavorite(){
+    favoritesList = getLocalStorage();
 
-//     localStorage.setItem("favorites", JSON.stringify(favoritesList));
-// })
+    let p = document.createElement("p");
+    injectHere.appendChild(p);
+    p.textContent = locationCode.innerText;
 
-getLocalStorage();
-// if location is in array, inFavorites = true
-if(favoritesList.includes(city)){
-    inFavorites = true;
-}else{
-    inFavorites = false;
+    loadChecks();
 }
 
-if(inFavorites){
-    starBtn.src = "../assets/star-fill.png";
+function loadChecks(){
+    favoritesList = getLocalStorage();
+
+    injectHere.innerHTML = "";
+
+    for(let i = 0; i < favoritesList.length; i++){
+        let p = document.createElement("p");
+        injectHere.appendChild(p);
+        p.textContent = favoritesList[i];
+
+        p.addEventListener("click", function() {
+            cityName = p.textContent;
+            currentWeatherCall(cityName);
+            fiveDayWeatherCall(cityName);
+            loadChecks();
+        })
+    }
+
+    console.log(locationCode.innerText);
+
+    if(favoritesList.includes(locationCode.innerText)){
+        starBtn.src = "../assets/star-fill.png";
+    }else{
+        starBtn.src = "../assets/star.png";
+    }
 }
 
-if(!inFavorites){
-    starBtn.src = "../assets/star.png";
-}
-
-console.log(inFavorites);
+loadChecks();

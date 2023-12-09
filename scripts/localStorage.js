@@ -1,13 +1,15 @@
-localStorage.js
-
 function saveToLocalStorage(city) {
     // get the current values that are saved into local storage
     // create an array of values to store into local storage
     let favoritesList = getLocalStorage();
+
     // add new city into our favoritesList array
     if (!favoritesList.includes(city)) {
         favoritesList.push(city);
+    }else{
+        removeFromLocalStorage(city);
     }
+    
     // save updated array to local storage
     localStorage.setItem('Favorites', JSON.stringify(favoritesList));
 }

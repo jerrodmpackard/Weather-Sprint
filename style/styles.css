@@ -11,6 +11,10 @@ h1{
     font-size: 72px;
 }
 
+p{
+    font-size: 32px;
+}
+
 .fontSize24{
     font-size: 24px;
 }
@@ -41,6 +45,7 @@ h1{
     width: 485px;
     height: 80px;
     border-radius: 10px;
+    font-size: 30px;
 }
 
 .buttonSize{
